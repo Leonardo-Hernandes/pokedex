@@ -1,5 +1,4 @@
 import React from 'react';
-import { View, Image } from 'react-native';
 import { colors } from '../../assets/colors';
 import Icon from '../../components/Icon';
 

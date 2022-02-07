@@ -16,6 +16,17 @@ export const InputContainer = styled.View`
   padding-bottom: 10;
   padding-horizontal: 10;
   border-radius: 10;
+  border-width: 1;
+`;
+
+export const PickerContainer = styled.View`
+  height: 50;
+  margin-vertical: 12;
+  border-radius: 4;
+  justify-content: center;
+  align-items: center;
+  padding-horizontal: 10;
+  border-width: 1;
 `;
 
 export const LoadingContainer = styled.View`
@@ -41,5 +52,5 @@ export const SubTitle = styled.Text`
   padding-vertical: 5;
   font-size: 18;
   font-weight: 200;
-  color: ${textColor.gray};
+  color: ${textColor.black};
 `;

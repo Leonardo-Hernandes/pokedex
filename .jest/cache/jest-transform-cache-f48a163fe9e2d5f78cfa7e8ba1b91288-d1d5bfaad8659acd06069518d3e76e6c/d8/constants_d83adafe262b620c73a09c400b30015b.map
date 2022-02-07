@@ -1,0 +1,1 @@
+{"version":3,"sources":["constants.js"],"names":["Dimensions","get","width","height"],"mappings":";;;;;AAAA;;AAEA,sBAAwBA,wBAAWC,GAAX,CAAe,QAAf,CAAxB;AAAA,IAAOC,KAAP,mBAAOA,KAAP;AAAA,IAAcC,MAAd,mBAAcA,MAAd","sourcesContent":["import {Dimensions} from 'react-native';\n\nconst {width, height} = Dimensions.get('screen');\n\nexport {width, height};"]}

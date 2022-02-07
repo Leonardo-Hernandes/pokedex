@@ -1,0 +1,15 @@
+51eea9363d8b9b13b7bbf001d7d118ae
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.width = exports.height = void 0;
+
+var _reactNative = require("react-native");
+
+var _Dimensions$get = _reactNative.Dimensions.get('screen'),
+    width = _Dimensions$get.width,
+    height = _Dimensions$get.height;
+
+exports.height = height;
+exports.width = width;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImNvbnN0YW50cy5qcyJdLCJuYW1lcyI6WyJEaW1lbnNpb25zIiwiZ2V0Iiwid2lkdGgiLCJoZWlnaHQiXSwibWFwcGluZ3MiOiI7Ozs7O0FBQUE7O0FBRUEsc0JBQXdCQSx3QkFBV0MsR0FBWCxDQUFlLFFBQWYsQ0FBeEI7QUFBQSxJQUFPQyxLQUFQLG1CQUFPQSxLQUFQO0FBQUEsSUFBY0MsTUFBZCxtQkFBY0EsTUFBZCIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7RGltZW5zaW9uc30gZnJvbSAncmVhY3QtbmF0aXZlJztcblxuY29uc3Qge3dpZHRoLCBoZWlnaHR9ID0gRGltZW5zaW9ucy5nZXQoJ3NjcmVlbicpO1xuXG5leHBvcnQge3dpZHRoLCBoZWlnaHR9OyJdfQ==

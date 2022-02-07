@@ -23,19 +23,10 @@ const details = ({ route}) => {
   const name = route.params.name;
   const details = route.params.details;
   const id = route.params.id;
-  // console.log(name)
-  console.log(details);
-  function renderItem ({item}) {
-    return (
-
-      <Text>aaa</Text>
-    )
-  }
-
+  
   return (
     <SafeAreaView>
       <HeaderContainer style={{backgroundColor: backgroundColors[details.types[0].type.name]}}>
-        {/* <ImageBackground source={Pokeball_header} height={140} width={400} resizeMode={'contain'} style={{ right: 0}}> */}
           <Row>
             <Image source={{uri: `https://assets.pokemon.com/assets/cms2/img/pokedex/full/${id}.png`}}/>
             <View>
@@ -49,7 +40,6 @@ const details = ({ route}) => {
 
           </Row>
           <DescTitle>About</DescTitle>
-        {/* </ImageBackground> */}
 
         <DetailsContainer>
           <DetailsBox>
@@ -67,7 +57,7 @@ const details = ({ route}) => {
               }}
               renderItem={({item}) => 
                 <Row style={{justifyContent: 'space-between'}}>
-                    <SttsText>{item.stat.name.replace("-", " ")}:</SttsText>
+                    <SttsText style={{ color: textColor.black}}>{item.stat.name.replace("-", " ")}:</SttsText>
                     <SttsText style={{ color: textColor.grey}}>{item.base_stat}</SttsText>
                 </Row>
               }

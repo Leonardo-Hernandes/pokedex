@@ -1,10 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import { View, Text, Button, TouchableOpacity } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import Tag from '../../components/Tag';
 import { backgroundColors } from '../../assets/colors';
 import Pokeball_Card from '../../assets/Images/Pokeball_Card.png';
-import Dots from '../../assets/Images/dots.png';
 import axios from 'axios';
+import store from './../../store';
+import { useDispatch } from 'react-redux'
+import { getPokeDetails } from './../../actions';
 
 import { 
   Container, 
@@ -18,9 +20,7 @@ import {
 
 const Card = ({item, navigation, onPress}) => {
   const [pokemon, setPokemon] = useState([]);
-
-  // const nav = navigation;
-  // const [isLoading, setIsLoading] = useState(false);
+  const dispatch = useDispatch()
 
   useEffect(() => {
     getPokemonDetails();
@@ -32,7 +32,9 @@ const Card = ({item, navigation, onPress}) => {
   async function getPokemonDetails () {
     try {
       const response = await axios.get(url);
-      setPokemon(response.data);
+
+      dispatch(getPokeDetails(response.data))
+      setPokemon(store.getState().pokeDetails[0]);
     } catch (error) {
       console.log(error)
     }

@@ -1,0 +1,145 @@
+c563effae46ad5017d39a241324e637a
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
+
+var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime/helpers/slicedToArray"));
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _constants = require("../../assets/constants");
+
+var _Pokeball_Header = _interopRequireDefault(require("../../assets/Images/Pokeball_Header.png"));
+
+var _FontAwesome = _interopRequireDefault(require("react-native-vector-icons/FontAwesome5"));
+
+var _Input = _interopRequireDefault(require("../../components/Input/Input"));
+
+var _Card = _interopRequireDefault(require("../../components/Card"));
+
+var _Icon = _interopRequireDefault(require("../../components/Icon"));
+
+var _axios = _interopRequireDefault(require("axios"));
+
+var _store = _interopRequireDefault(require("./../../store"));
+
+var _reactRedux = require("react-redux");
+
+var _actions = require("./../../actions");
+
+var _reactNative = require("react-native");
+
+var _colors = require("../../../src/assets/colors");
+
+var _styles = require("./styles");
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function _createForOfIteratorHelperLoose(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (it) return (it = it.call(o)).next.bind(it); if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; return function () { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+var home = function home(_ref) {
+  var navigation = _ref.navigation,
+      pokes = _ref.pokes;
+
+  var _useState = (0, _react.useState)([]),
+      _useState2 = (0, _slicedToArray2.default)(_useState, 2),
+      pokemons = _useState2[0],
+      setPokemons = _useState2[1];
+
+  var _useState3 = (0, _react.useState)(true),
+      _useState4 = (0, _slicedToArray2.default)(_useState3, 2),
+      isLoading = _useState4[0],
+      setIsLoading = _useState4[1];
+
+  var dispatch = (0, _reactRedux.useDispatch)();
+  (0, _react.useEffect)(function () {
+    getPokemon();
+  }, []);
+
+  function getPokemon() {
+    var response, pokemonData, _iterator, _step, i, pokeNumber, pokemonList;
+
+    return _regenerator.default.async(function getPokemon$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            _context.prev = 0;
+            _context.next = 3;
+            return _regenerator.default.awrap(_axios.default.get("https://pokeapi.co/api/v2/generation/1/"));
+
+          case 3:
+            response = _context.sent;
+            pokemonData = response.data.pokemon_species;
+
+            for (_iterator = _createForOfIteratorHelperLoose(pokemonData); !(_step = _iterator()).done;) {
+              i = _step.value;
+              pokeNumber = i.url.replace("https://pokeapi.co/api/v2/pokemon-species/", '').replace("/", '');
+              i.id = pokeNumber;
+            }
+
+            pokemonList = pokemonData.sort(function (a, b) {
+              return a.id - b.id;
+            });
+            dispatch((0, _actions.getPokes)(pokemonList));
+            setPokemons(_store.default.getState().pokes[0].data);
+            setIsLoading(false);
+            _context.next = 15;
+            break;
+
+          case 12:
+            _context.prev = 12;
+            _context.t0 = _context["catch"](0);
+            console.log(_context.t0);
+
+          case 15:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, null, null, [[0, 12]], Promise);
+  }
+
+  return _react.default.createElement(_react.default.Fragment, null, isLoading == true ? _react.default.createElement(_styles.LoadingContainer, null, _react.default.createElement(_reactNative.ActivityIndicator, {
+    size: "large"
+  })) : _react.default.createElement(_reactNative.SafeAreaView, null, _react.default.createElement(_styles.Container, null, _react.default.createElement(_reactNative.ImageBackground, {
+    resizeMode: 'contain',
+    style: {
+      width: "100%",
+      heigth: _constants.height / 4
+    },
+    source: _Pokeball_Header.default
+  }, _react.default.createElement(_styles.Title, null, "Pokedex"), _react.default.createElement(_styles.SubTitle, null, "Search for Pokemon by name or using the National Pok\xE9dex number.")), _react.default.createElement(_styles.InputContainer, null, _react.default.createElement(_FontAwesome.default, {
+    name: "search",
+    size: 18,
+    color: _colors.textColor.grey
+  }), _react.default.createElement(_Input.default, {
+    placeholder: "What Pok\xE9mon are you looking for?"
+  })), _react.default.createElement(_reactNative.FlatList, {
+    data: pokemons,
+    renderItem: function renderItem(_ref2) {
+      var item = _ref2.item;
+      return _react.default.createElement(_Card.default, {
+        item: item,
+        navigation: navigation
+      });
+    },
+    contentContainerStyle: {
+      paddingBottom: 140 * 2
+    }
+  }))));
+};
+
+var _default = home;
+exports.default = _default;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImluZGV4LmpzIl0sIm5hbWVzIjpbImhvbWUiLCJuYXZpZ2F0aW9uIiwicG9rZXMiLCJwb2tlbW9ucyIsInNldFBva2Vtb25zIiwiaXNMb2FkaW5nIiwic2V0SXNMb2FkaW5nIiwiZGlzcGF0Y2giLCJnZXRQb2tlbW9uIiwiYXhpb3MiLCJnZXQiLCJyZXNwb25zZSIsInBva2Vtb25EYXRhIiwiZGF0YSIsInBva2Vtb25fc3BlY2llcyIsImkiLCJwb2tlTnVtYmVyIiwidXJsIiwicmVwbGFjZSIsImlkIiwicG9rZW1vbkxpc3QiLCJzb3J0IiwiYSIsImIiLCJzdG9yZSIsImdldFN0YXRlIiwiY29uc29sZSIsImxvZyIsIndpZHRoIiwiaGVpZ3RoIiwiaGVpZ2h0IiwiUG9rZWJhbGxfaGVhZGVyIiwidGV4dENvbG9yIiwiZ3JleSIsIml0ZW0iLCJwYWRkaW5nQm90dG9tIl0sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7OztBQUFBOztBQUNBOztBQUNBOztBQUVBOztBQUVBOztBQUNBOztBQUNBOztBQUNBOztBQUNBOztBQUNBOztBQUNBOztBQUVBOztBQVNBOztBQUVBOzs7Ozs7Ozs7Ozs7QUFFQSxJQUFNQSxJQUFJLEdBQUcsU0FBUEEsSUFBTyxPQUEyQjtBQUFBLE1BQXhCQyxVQUF3QixRQUF4QkEsVUFBd0I7QUFBQSxNQUFaQyxLQUFZLFFBQVpBLEtBQVk7O0FBQ3RDLGtCQUFnQyxxQkFBUyxFQUFULENBQWhDO0FBQUE7QUFBQSxNQUFPQyxRQUFQO0FBQUEsTUFBaUJDLFdBQWpCOztBQUNBLG1CQUFrQyxxQkFBUyxJQUFULENBQWxDO0FBQUE7QUFBQSxNQUFPQyxTQUFQO0FBQUEsTUFBa0JDLFlBQWxCOztBQUVBLE1BQU1DLFFBQVEsR0FBRyw4QkFBakI7QUFFQSx3QkFBVSxZQUFNO0FBQ2RDLElBQUFBLFVBQVU7QUFDWCxHQUZELEVBRUcsRUFGSDs7QUFJQSxXQUFlQSxVQUFmO0FBQUE7O0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUEsOENBRTJCQyxlQUFNQyxHQUFOLENBQVUseUNBQVYsQ0FGM0I7O0FBQUE7QUFFVUMsWUFBQUEsUUFGVjtBQUlVQyxZQUFBQSxXQUpWLEdBSXdCRCxRQUFRLENBQUNFLElBQVQsQ0FBY0MsZUFKdEM7O0FBTUksNkRBQWNGLFdBQWQsaUNBQTJCO0FBQWxCRyxjQUFBQSxDQUFrQjtBQUNyQkMsY0FBQUEsVUFEcUIsR0FDUkQsQ0FBQyxDQUFDRSxHQUFGLENBQU1DLE9BQU4sQ0FBYyw0Q0FBZCxFQUE0RCxFQUE1RCxFQUFnRUEsT0FBaEUsQ0FBd0UsR0FBeEUsRUFBNkUsRUFBN0UsQ0FEUTtBQUV6QkgsY0FBQUEsQ0FBQyxDQUFDSSxFQUFGLEdBQU9ILFVBQVA7QUFDRDs7QUFFS0ksWUFBQUEsV0FYVixHQVd3QlIsV0FBVyxDQUFDUyxJQUFaLENBQWlCLFVBQUNDLENBQUQsRUFBSUMsQ0FBSixFQUFVO0FBQzdDLHFCQUFPRCxDQUFDLENBQUNILEVBQUYsR0FBT0ksQ0FBQyxDQUFDSixFQUFoQjtBQUNELGFBRm1CLENBWHhCO0FBZ0JJWixZQUFBQSxRQUFRLENBQUMsdUJBQVNhLFdBQVQsQ0FBRCxDQUFSO0FBQ0FoQixZQUFBQSxXQUFXLENBQUNvQixlQUFNQyxRQUFOLEdBQWlCdkIsS0FBakIsQ0FBdUIsQ0FBdkIsRUFBMEJXLElBQTNCLENBQVg7QUFDQVAsWUFBQUEsWUFBWSxDQUFDLEtBQUQsQ0FBWjtBQWxCSjtBQUFBOztBQUFBO0FBQUE7QUFBQTtBQW9CSW9CLFlBQUFBLE9BQU8sQ0FBQ0MsR0FBUjs7QUFwQko7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7O0FBd0JBLFNBQ0UsNERBRUl0QixTQUFTLElBQUksSUFBYixHQUVFLDZCQUFDLHdCQUFELFFBQ0UsNkJBQUMsOEJBQUQ7QUFBbUIsSUFBQSxJQUFJLEVBQUM7QUFBeEIsSUFERixDQUZGLEdBTUUsNkJBQUMseUJBQUQsUUFDRSw2QkFBQyxpQkFBRCxRQUNFLDZCQUFDLDRCQUFEO0FBQ0UsSUFBQSxVQUFVLEVBQUUsU0FEZDtBQUVFLElBQUEsS0FBSyxFQUFFO0FBQUV1QixNQUFBQSxLQUFLLEVBQUUsTUFBVDtBQUFpQkMsTUFBQUEsTUFBTSxFQUFFQyxvQkFBUztBQUFsQyxLQUZUO0FBR0UsSUFBQSxNQUFNLEVBQUVDO0FBSFYsS0FLRSw2QkFBQyxhQUFELGtCQUxGLEVBTUUsNkJBQUMsZ0JBQUQsOEVBTkYsQ0FERixFQVVFLDZCQUFDLHNCQUFELFFBQ0UsNkJBQUMsb0JBQUQ7QUFBVSxJQUFBLElBQUksRUFBQyxRQUFmO0FBQXdCLElBQUEsSUFBSSxFQUFFLEVBQTlCO0FBQWtDLElBQUEsS0FBSyxFQUFFQyxrQkFBVUM7QUFBbkQsSUFERixFQUVFLDZCQUFDLGNBQUQ7QUFBTyxJQUFBLFdBQVcsRUFBQztBQUFuQixJQUZGLENBVkYsRUFlRSw2QkFBQyxxQkFBRDtBQUNFLElBQUEsSUFBSSxFQUFFOUIsUUFEUjtBQUVFLElBQUEsVUFBVSxFQUFFO0FBQUEsVUFBRStCLElBQUYsU0FBRUEsSUFBRjtBQUFBLGFBQVksNkJBQUMsYUFBRDtBQUFNLFFBQUEsSUFBSSxFQUFFQSxJQUFaO0FBQWtCLFFBQUEsVUFBVSxFQUFFakM7QUFBOUIsUUFBWjtBQUFBLEtBRmQ7QUFHRSxJQUFBLHFCQUFxQixFQUFFO0FBQ3JCa0MsTUFBQUEsYUFBYSxFQUFFLE1BQU07QUFEQTtBQUh6QixJQWZGLENBREYsQ0FSTixDQURGO0FBcUNELENBdkVEOztlQXlFZW5DLEkiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgUmVhY3QsIHt1c2VFZmZlY3QsIHVzZVN0YXRlfSBmcm9tICdyZWFjdCc7XG5pbXBvcnQgeyBoZWlnaHQgfSBmcm9tICcuLi8uLi9hc3NldHMvY29uc3RhbnRzJ1xuaW1wb3J0IFBva2ViYWxsX2hlYWRlciBmcm9tICcuLi8uLi9hc3NldHMvSW1hZ2VzL1Bva2ViYWxsX0hlYWRlci5wbmcnO1xuXG5pbXBvcnQgRmE1SWNvbiBmcm9tICdyZWFjdC1uYXRpdmUtdmVjdG9yLWljb25zL0ZvbnRBd2Vzb21lNSc7XG5cbmltcG9ydCBJbnB1dCBmcm9tICcuLi8uLi9jb21wb25lbnRzL0lucHV0L0lucHV0JztcbmltcG9ydCBDYXJkIGZyb20gJy4uLy4uL2NvbXBvbmVudHMvQ2FyZCc7XG5pbXBvcnQgSWNvbiBmcm9tICcuLi8uLi9jb21wb25lbnRzL0ljb24nO1xuaW1wb3J0IGF4aW9zIGZyb20gJ2F4aW9zJztcbmltcG9ydCBzdG9yZSBmcm9tICcuLy4uLy4uL3N0b3JlJztcbmltcG9ydCB7IHVzZURpc3BhdGNoIH0gZnJvbSAncmVhY3QtcmVkdXgnXG5pbXBvcnQgeyBnZXRQb2tlcyB9IGZyb20gJy4vLi4vLi4vYWN0aW9ucyc7XG5cbmltcG9ydCB7ICBcbiAgU2FmZUFyZWFWaWV3LCBcbiAgSW1hZ2VCYWNrZ3JvdW5kLCBcbiAgRmxhdExpc3QsXG4gIFRvdWNoYWJsZU9wYWNpdHksXG4gIEFjdGl2aXR5SW5kaWNhdG9yLFxuICBCdXR0b25cbn0gZnJvbSAncmVhY3QtbmF0aXZlJztcblxuaW1wb3J0IHsgdGV4dENvbG9yIH0gZnJvbSAnLi4vLi4vLi4vc3JjL2Fzc2V0cy9jb2xvcnMnO1xuXG5pbXBvcnQgeyBDb250YWluZXIsIFJvdywgVGl0bGUsIFN1YlRpdGxlLCBJbnB1dENvbnRhaW5lciwgTG9hZGluZ0NvbnRhaW5lciB9IGZyb20gJy4vc3R5bGVzJztcblxuY29uc3QgaG9tZSA9ICh7IG5hdmlnYXRpb24sIHBva2VzIH0pID0+IHtcbiAgY29uc3QgW3Bva2Vtb25zLCBzZXRQb2tlbW9uc10gPSB1c2VTdGF0ZShbXSk7XG4gIGNvbnN0IFtpc0xvYWRpbmcsIHNldElzTG9hZGluZ10gPSB1c2VTdGF0ZSh0cnVlKTtcblxuICBjb25zdCBkaXNwYXRjaCA9IHVzZURpc3BhdGNoKClcblxuICB1c2VFZmZlY3QoKCkgPT4ge1xuICAgIGdldFBva2Vtb24oKTtcbiAgfSwgW10pXG5cbiAgYXN5bmMgZnVuY3Rpb24gZ2V0UG9rZW1vbiAoKSB7XG4gICAgdHJ5IHtcbiAgICAgIGNvbnN0IHJlc3BvbnNlID0gYXdhaXQgYXhpb3MuZ2V0KFwiaHR0cHM6Ly9wb2tlYXBpLmNvL2FwaS92Mi9nZW5lcmF0aW9uLzEvXCIpO1xuXG4gICAgICBjb25zdCBwb2tlbW9uRGF0YSA9IHJlc3BvbnNlLmRhdGEucG9rZW1vbl9zcGVjaWVzXG5cbiAgICAgIGZvciAobGV0IGkgb2YgcG9rZW1vbkRhdGEpIHtcbiAgICAgICAgbGV0IHBva2VOdW1iZXIgPSBpLnVybC5yZXBsYWNlKFwiaHR0cHM6Ly9wb2tlYXBpLmNvL2FwaS92Mi9wb2tlbW9uLXNwZWNpZXMvXCIsICcnKS5yZXBsYWNlKFwiL1wiLCAnJylcbiAgICAgICAgaS5pZCA9IHBva2VOdW1iZXJcbiAgICAgIH1cblxuICAgICAgY29uc3QgcG9rZW1vbkxpc3QgPSBwb2tlbW9uRGF0YS5zb3J0KChhLCBiKSA9PiB7XG4gICAgICAgIHJldHVybiBhLmlkIC0gYi5pZDtcbiAgICAgIH0pO1xuICAgICAgXG5cbiAgICAgIGRpc3BhdGNoKGdldFBva2VzKHBva2Vtb25MaXN0KSlcbiAgICAgIHNldFBva2Vtb25zKHN0b3JlLmdldFN0YXRlKCkucG9rZXNbMF0uZGF0YSk7XG4gICAgICBzZXRJc0xvYWRpbmcoZmFsc2UpXG4gICAgfSBjYXRjaCAoZXJyb3IpIHtcbiAgICAgIGNvbnNvbGUubG9nKGVycm9yKVxuICAgIH1cbiAgfVxuXG4gIHJldHVybiAoXG4gICAgPD5cbiAgICAgIHtcbiAgICAgICAgaXNMb2FkaW5nID09IHRydWUgXG4gICAgICAgID9cbiAgICAgICAgICA8TG9hZGluZ0NvbnRhaW5lcj5cbiAgICAgICAgICAgIDxBY3Rpdml0eUluZGljYXRvciBzaXplPVwibGFyZ2VcIi8+XG4gICAgICAgICAgPC9Mb2FkaW5nQ29udGFpbmVyPlxuICAgICAgICA6IFxuICAgICAgICAgIDxTYWZlQXJlYVZpZXc+XG4gICAgICAgICAgICA8Q29udGFpbmVyPlxuICAgICAgICAgICAgICA8SW1hZ2VCYWNrZ3JvdW5kIFxuICAgICAgICAgICAgICAgIHJlc2l6ZU1vZGU9eydjb250YWluJ31cbiAgICAgICAgICAgICAgICBzdHlsZT17eyB3aWR0aDogXCIxMDAlXCIsIGhlaWd0aDogaGVpZ2h0IC8gNH19IFxuICAgICAgICAgICAgICAgIHNvdXJjZT17UG9rZWJhbGxfaGVhZGVyfVxuICAgICAgICAgICAgICA+XG4gICAgICAgICAgICAgICAgPFRpdGxlPlBva2VkZXg8L1RpdGxlPlxuICAgICAgICAgICAgICAgIDxTdWJUaXRsZT5TZWFyY2ggZm9yIFBva2Vtb24gYnkgbmFtZSBvciB1c2luZyB0aGUgTmF0aW9uYWwgUG9rw6lkZXggbnVtYmVyLjwvU3ViVGl0bGU+XG4gICAgICAgICAgICAgIDwvSW1hZ2VCYWNrZ3JvdW5kPlxuXG4gICAgICAgICAgICAgIDxJbnB1dENvbnRhaW5lcj5cbiAgICAgICAgICAgICAgICA8RmE1SWNvbiAgbmFtZT1cInNlYXJjaFwiIHNpemU9ezE4fSBjb2xvcj17dGV4dENvbG9yLmdyZXl9Lz5cbiAgICAgICAgICAgICAgICA8SW5wdXQgcGxhY2Vob2xkZXI9XCJXaGF0IFBva8OpbW9uIGFyZSB5b3UgbG9va2luZyBmb3I/XCIvPlxuICAgICAgICAgICAgICA8L0lucHV0Q29udGFpbmVyPlxuXG4gICAgICAgICAgICAgIDxGbGF0TGlzdFxuICAgICAgICAgICAgICAgIGRhdGE9e3Bva2Vtb25zfVxuICAgICAgICAgICAgICAgIHJlbmRlckl0ZW09eyh7aXRlbX0pID0+IDxDYXJkIGl0ZW09e2l0ZW19IG5hdmlnYXRpb249e25hdmlnYXRpb259IC8+fVxuICAgICAgICAgICAgICAgIGNvbnRlbnRDb250YWluZXJTdHlsZT17e1xuICAgICAgICAgICAgICAgICAgcGFkZGluZ0JvdHRvbTogMTQwICogMlxuICAgICAgICAgICAgICAgIH19XG4gICAgICAgICAgICAgIC8+XG4gICAgICAgICAgICA8L0NvbnRhaW5lcj5cbiAgICAgICAgICA8L1NhZmVBcmVhVmlldz5cbiAgICAgIH1cbiAgICA8Lz5cbiAgKTtcbn1cblxuZXhwb3J0IGRlZmF1bHQgaG9tZTsiXX0=

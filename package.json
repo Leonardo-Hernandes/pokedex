@@ -10,16 +10,24 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@react-native-picker/picker": "^2.2.1",
     "@react-navigation/native": "^6.0.8",
     "@react-navigation/native-stack": "^6.4.1",
     "axios": "^0.25.0",
+    "babel-plugin-module-resolver": "^4.1.0",
+    "identity-obj-proxy": "^3.0.0",
     "react": "17.0.2",
     "react-native": "0.67.2",
     "react-native-axios": "^0.17.1",
     "react-native-gesture-handler": "^2.2.0",
+    "react-native-paper": "^4.11.2",
+    "react-native-picker-select": "^8.0.4",
+    "react-native-reanimated": "^2.4.0",
     "react-native-safe-area-context": "^3.3.2",
     "react-native-screens": "^3.10.2",
     "react-native-vector-icons": "^9.0.0",
+    "react-redux": "^7.2.6",
+    "redux": "^4.1.2",
     "styled-components": "^5.3.3"
   },
   "devDependencies": {
@@ -33,6 +41,13 @@
     "react-test-renderer": "17.0.2"
   },
   "jest": {
-    "preset": "react-native"
+    "preset": "react-native",
+    "moduleNameMapper": {
+      ".+\\.(css|styl|less|sass|scss|png|jpg|ttf|woff|woff2)$": "identity-obj-proxy"
+    },
+    "transformIgnorePatterns": [
+      "node_modules/(?!(react-native|react-native-vector-icons)/)",
+      "node_modules/(?!(@react-native|react-native)/)"
+    ]
   }
 }
